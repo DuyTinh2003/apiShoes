@@ -55,7 +55,7 @@ class AuthController extends Controller
     {
         $oClient = OClient::where('password_client', 1)->first();
         $http = new Client;
-        $response = $http->request('POST', 'http://127.0.0.1:8001/oauth/token', [
+        $response = $http->request('POST', 'https://apishoes-production.up.railway.app/oauth/token', [
             'form_params' => [
                 'grant_type' => 'password',
                 'client_id' => $oClient->id,
@@ -72,7 +72,7 @@ class AuthController extends Controller
     {
         $oClient = OClient::where('password_client', 1)->first();
         $http = new Client;
-        $response = $http->request('POST', 'http://127.0.0.1:8002/oauth/token', [
+        $response = $http->request('POST', 'https://apishoes-production.up.railway.app/oauth/token', [
             'form_params' => [
                 'grant_type' => 'refresh_token',
                 'client_id' => $oClient->id,
