@@ -23,6 +23,8 @@ use App\Models\Order;
 Route::post('/login', [AuthController::class, "login"]);
 Route::post('/register', [AuthController::class, "register"]);
 Route::post('/refreshToken', [AuthController::class, "reFreshToken"]);
+
+
 Route::middleware(['auth:api', 'check_role'])->group(function () {
     Route::resources([
         'product' => ProductController::class,
@@ -35,6 +37,7 @@ Route::middleware(['auth:api', 'check_role'])->group(function () {
     Route::get('/getCartByIdUser/{UserId?}', [CartController::class, 'getCartByIdUser']);
     Route::post('/updateCart', [CartController::class, 'updateCart']);
 });
+Route::get('/product', [ProductController::class, "index"]);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
