@@ -128,7 +128,48 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:products,name,' . $id,
+            'image' => 'required',
+            'cate_id' => 'required',
+            'price' => 'required',
+            'type' => 'required',
+            'description' => 'required',
+            'sale' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 401);
+        }
+        $product = Product::find($id);
+        if (!$product) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Product not found'
+            ], 404);
+        }
+        $product->name = $request->name;
+        $product->image = $request->image;
+        $product->cate_id = $request->cate_id;
+        $product->price = $request->price;
+        $product->type = $request->type;
+        $product->description = $request->description;
+        $product->sale = $request->sale;
+        $product->save();
+        if ($request->sizes) {
+            foreach ($request->sizes as $key => $val) {
+                // Delete all existing sizes for the product
+                $product->sizes()->delete();
+                foreach ($request->sizes as $key => $val) {
+                    $product_size = new ProductSize();
+                    $product_size->product_id = $product->id;
+                    $product_size->size = $val['size'];
+                    $product_size->quantity_sold = $val['quantity_sold'];
+                    $product_size->quantity_remaining = $val['quantity_remaining'];
+                    $product_size->save();
+                }
+            }
+        };
+        return response()->json(["message" => "Product updated successfully"], 200);
     }
 
     /**

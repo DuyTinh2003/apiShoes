@@ -25,19 +25,17 @@ Route::post('/register', [AuthController::class, "register"]);
 Route::post('/refreshToken', [AuthController::class, "reFreshToken"]);
 
 
-Route::middleware(['auth:api', 'check_role'])->group(function () {
-    Route::resources([
-        'product' => ProductController::class,
-        'category' => CategoryController::class,
-        'order' => OrderController::class,
-    ]);
-    Route::get('/getProductByCategory/{categoryId?}', [ProductController::class, 'getProductByCate']);
-    Route::get('/getOrderByIdUser/{UserId?}', [OrderController::class, 'getOrderByIdUser']);
-
-    Route::get('/getCartByIdUser/{UserId?}', [CartController::class, 'getCartByIdUser']);
-    Route::post('/updateCart', [CartController::class, 'updateCart']);
-});
-Route::get('/product', [ProductController::class, "index"]);
+Route::resources([
+    'product' => ProductController::class,
+    'category' => CategoryController::class,
+    'order' => OrderController::class,
+]);
+Route::get('/getProductByCategory/{categoryId?}', [ProductController::class, 'getProductByCate']);
+Route::get('/getOrderByIdUser/{UserId?}', [OrderController::class, 'getOrderByIdUser']);
+Route::get('/getCartByIdUser/{UserId?}', [CartController::class, 'getCartByIdUser']);
+Route::post('/updateCart', [CartController::class, 'updateCart']);
+// Route::middleware(['auth:api', 'check_role'])->group(function () {
+// });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
