@@ -7,6 +7,7 @@ use App\Http\Controllers\api\CartController;
 use App\Http\Controllers\api\ProductController;
 use App\Http\Controllers\api\CategoryController;
 use App\Http\Controllers\api\OrderController;
+use App\Http\Controllers\api\UserController;
 use App\Models\Order;
 
 /*
@@ -29,6 +30,7 @@ Route::resources([
     'product' => ProductController::class,
     'category' => CategoryController::class,
     'order' => OrderController::class,
+    'user' => UserController::class
 ]);
 Route::get('/getProductByCategory/{categoryId?}', [ProductController::class, 'getProductByCate']);
 Route::get('/getOrderByIdUser/{UserId?}', [OrderController::class, 'getOrderByIdUser']);
@@ -37,6 +39,6 @@ Route::post('/updateCart', [CartController::class, 'updateCart']);
 // Route::middleware(['auth:api', 'check_role'])->group(function () {
 // });
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
