@@ -93,8 +93,7 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $id,
-            'password' => 'required|min:8',
+            'email' => 'required',
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
@@ -108,9 +107,17 @@ class UserController extends Controller
 
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = bcrypt($request->password);
         if ($request->role) {
             $user->role = $request->role;
+        }
+        if ($request->image) {
+            $user->image = $request->image;
+        }
+        if ($request->address) {
+            $user->address = $request->address;
+        }
+        if ($request->phone) {
+            $user->phone = $request->phone;
         }
         $user->save();
 
