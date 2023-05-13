@@ -82,7 +82,7 @@ class ProductController extends Controller
                 $product_gallery->save();
             }
         }
-        return response()->json(["message" => "Product create success"], 201);
+        return response()->json($product);
     }
 
     /**

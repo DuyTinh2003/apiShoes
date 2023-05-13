@@ -44,7 +44,6 @@ class UserController extends Controller
             'password' => 'required|min:8',
             'role' => 'required',
         ]);
-
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
@@ -54,6 +53,7 @@ class UserController extends Controller
         $user->password = bcrypt($request->password);
         $user->role = $request->role;
         $user->save();
+        return   response()->json($user);
     }
 
     /**

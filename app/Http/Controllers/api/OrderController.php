@@ -73,7 +73,7 @@ class OrderController extends Controller
                 $orderDetail->save();
             }
         };
-        return response()->json(["message" => "Order create success"], 201);
+        return response()->json($order);
     }
 
     /**
