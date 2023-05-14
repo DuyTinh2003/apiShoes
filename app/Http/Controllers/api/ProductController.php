@@ -69,7 +69,7 @@ class ProductController extends Controller
                 $product_size = new ProductSize();
                 $product_size->product_id = $product->id;
                 $product_size->size = $val['size'];
-                if ($val['quantity_sold']) {
+                if (isset($val['quantity_sold'])) {
                     $product_size->quantity_sold = $val['quantity_sold'];
                 } else {
                     $product_size->quantity_sold = 0;
