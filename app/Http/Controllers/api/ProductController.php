@@ -44,7 +44,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:products',
+            'name' => 'required',
             'image' => 'required',
             'cate_id' => 'required',
             'price' => 'required',
@@ -169,7 +169,7 @@ class ProductController extends Controller
                 }
             }
         };
-        return response()->json(["message" => "Product updated successfully"], 200);
+        return response()->json($product);
     }
 
     /**
