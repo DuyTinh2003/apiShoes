@@ -24,8 +24,7 @@ use App\Models\Order;
 Route::post('/login', [AuthController::class, "login"]);
 Route::post('/register', [AuthController::class, "register"]);
 Route::post('/refreshToken', [AuthController::class, "reFreshToken"]);
-
-
+Route::put('/updateQuantityProduct', [ProductController::class, 'updateQuantityProduct']);
 Route::resources([
     'product' => ProductController::class,
     'category' => CategoryController::class,

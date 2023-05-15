@@ -122,7 +122,19 @@ class ProductController extends Controller
     {
         //
     }
-
+    public function updateQuantityProduct(Request $request)
+    {
+        if ($request->order_details) {
+            foreach ($request->order_details as $key => $val) {
+                $product_size = ProductSize::where('product_id', $val['idProduct'])
+                    ->where('size', $val['size'])
+                    ->first();
+                $product_size->quantity_sold += $val['amount'];
+                $product_size->quantity_remaining -= $val['amount'];
+                $product_size->save();
+            }
+        };
+    }
     /**
      * Update the specified resource in storage.
      *

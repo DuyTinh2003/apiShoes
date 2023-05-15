@@ -107,7 +107,10 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $order = Order::find($id);
+        $order->status = $request->status;
+        $order->save();
+        return response()->json($order);
     }
 
     /**
