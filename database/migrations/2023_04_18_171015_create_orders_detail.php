@@ -18,6 +18,7 @@ class CreateOrdersDetail extends Migration
             $table->foreignId("id_order")->constrained("orders", "id")->onDelete("cascade");
             $table->foreignId("id_product")->constrained("products", "id")->onDelete("cascade");
             $table->integer("amount");
+            $table->string("size");
             $table->double("price");
             $table->timestamps();
         });

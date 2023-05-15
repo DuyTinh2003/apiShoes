@@ -51,7 +51,6 @@ class OrderController extends Controller
             'id_user' => 'required',
             'phone' => 'required',
             'address' => 'required',
-            'status' => 'required',
             'order_details' => 'required',
         ]);
         if ($validator->fails()) {
@@ -61,7 +60,7 @@ class OrderController extends Controller
         $order->id_user = $request->id_user;
         $order->phone = $request->phone;
         $order->address = $request->address;
-        $order->status = $request->status;
+        $order->status = "pending";
         $order->save();
         if ($request->order_details) {
             foreach ($request->order_details as $key => $val) {
@@ -70,6 +69,7 @@ class OrderController extends Controller
                 $orderDetail->id_product = $val['id_product'];
                 $orderDetail->amount = $val['amount'];
                 $orderDetail->price = $val['price'];
+                $orderDetail->size = $val['size'];
                 $orderDetail->save();
             }
         };
