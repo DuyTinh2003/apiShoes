@@ -125,21 +125,27 @@ class OrderController extends Controller
     }
     public function getOrderByIdUser($id_user)
     {
-        $user = User::find($id_user);
-        if (!$user) {
-            return response()->json(['success' => false, 'message' => 'User not found']);
-        }
-        // $orders = Order::with(['orderDetails.product'])
-        //     ->where('id_user', $id_user)
-        //     ->get();
-        $order = DB::table('orders')
-            ->join('users', 'users.id', '=', 'orders.id_user')
-            ->join('order_details', 'order_details.id_order', '=', 'orders.id')
-            ->join('products', 'products.id', '=', 'order_details.id_product')
-            ->select('orders.id', 'orders.status', 'order_details.amount', 'order_details.price', 'products.name', 'products.image', 'products.type', 'products.description', 'products.sale', 'orders.created_at', 'orders.updated_at')
-            ->where('orders.id_user', $id_user)
-            // ->orderBy('orders.id', 'desc')
+        $orderByIdUser =
+            Order::with('orderDetails.product')
+            ->join('users', 'orders.id_user', '=', 'users.id')
+            ->select('orders.id_user', 'orders.id', 'users.name', 'orders.phone', 'orders.address', 'orders.status')->where("id_user", $id_user)
             ->get();
-        return response()->json(["data" => $order]);
+        return response()->json(["data" => $orderByIdUser]);
+        // $user = User::find($id_user);
+        // if (!$user) {
+        //     return response()->json(['success' => false, 'message' => 'User not found']);
+        // }
+        // // $orders = Order::with(['orderDetails.product'])
+        // //     ->where('id_user', $id_user)
+        // //     ->get();
+        // $order = DB::table('orders')
+        //     ->join('users', 'users.id', '=', 'orders.id_user')
+        //     ->join('order_details', 'order_details.id_order', '=', 'orders.id')
+        //     ->join('products', 'products.id', '=', 'order_details.id_product')
+        //     ->select('orders.id', 'orders.status', 'order_details.amount', 'order_details.price', 'products.name', 'products.image', 'products.type', 'products.description', 'products.sale', 'orders.created_at', 'orders.updated_at')
+        //     ->where('orders.id_user', $id_user)
+        //     // ->orderBy('orders.id', 'desc')
+        //     ->get();
+        // return response()->json(["data" => $order,]);
     }
 }
